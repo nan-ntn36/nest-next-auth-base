@@ -28,6 +28,7 @@ import { AuthModule } from '@/auth/auth.module';
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
+      // eslint-disable-next-line @typescript-eslint/require-await
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get<string>('MONGODB_URI'),
       }),

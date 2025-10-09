@@ -7,6 +7,8 @@ import { Model } from 'mongoose';
 import { hashPassword } from '@/helper/util';
 import aqp from 'api-query-params';
 import mongoose from 'mongoose';
+import { isEmail } from 'class-validator';
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -76,6 +78,19 @@ export class UsersService {
     if (!user) {
       throw new BadRequestException(`User not found`);
     }
+    return user;
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    if (!email) {
+      throw new BadRequestException(`Email is required`);
+    }
+    if (isEmail(email) === false) {
+      throw new BadRequestException(`Invalid email format: ${email}`);
+    }
+    const user = await this.userModel.findOne({ email }).select('-__v').lean();
+    if (!user)
+      throw new BadRequestException(`User not found with email: ${email}`);
     return user;
   }
 

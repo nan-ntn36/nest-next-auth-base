@@ -15,8 +15,15 @@ export const hashPassword = async (plainPassword: string): Promise<string> => {
 };
 
 export const comparePassword = async (
-  plainPasword: string,
-  hashedPasword: string,
+  plainPassword: string,
+  hashedPassword: string,
 ): Promise<boolean> => {
-  return await bcrypt.compare(plainPasword + PEPPER, hashedPasword);
+  if (!plainPassword || !hashedPassword) return false;
+  return await bcrypt.compare(plainPassword + PEPPER, hashedPassword);
+};
+
+export const isEmail = (email: string): boolean => {
+  if (!email) return false;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 };
