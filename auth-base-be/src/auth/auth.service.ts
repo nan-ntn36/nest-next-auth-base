@@ -15,19 +15,23 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(signInDto: SignInDto): Promise<any> {
-    const { email, password } = signInDto;
-    const user = await this.usersService.findByEmail(email);
+  async validateUser(username: string, password: string): Promise<any> {
+    const user = await this.usersService.findByEmail(username);
     if (!user) {
-      throw new BadRequestException(`User not found with email: ${email}`);
+      throw new BadRequestException(`User not found with email: ${username}`);
     }
     const isPasswordValid = await comparePassword(password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException(`Invalid password`);
     }
-    const payload = { sub: user._id, username: user.email };
+
+    return user;
+  }
+
+  async login(user: any) {
+    const payload = { username: user.username, sub: user._id };
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: this.jwtService.sign(payload),
     };
   }
 }
