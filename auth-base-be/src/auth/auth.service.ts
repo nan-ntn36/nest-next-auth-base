@@ -24,12 +24,12 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException(`Invalid password`);
     }
-
     return user;
   }
 
   async login(user: any) {
-    const payload = { username: user.username, sub: user._id };
+    // chuyển dữ liệu vào jwt (bên nhận được sẽ là trong validate của jwt.strategy.ts)
+    const payload = { username: user.email, sub: user._id };
     return {
       access_token: this.jwtService.sign(payload),
     };
