@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from './passport/local/local-auth.guard';
 import { JwtAuthGuard } from './passport/jwt/jwt-auth.guard';
+import { Public } from '@/decorator/customizeMetadata';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -11,6 +12,7 @@ export class AuthController {
 
   // login -> local strategy(1) -> service(validateUser)(2) -> service(login)(3)
   @UseGuards(LocalAuthGuard)
+  @Public()
   @Post('login')
   async login(@Request() req) {
     return this.authService.login(req.user);

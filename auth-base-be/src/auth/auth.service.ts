@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { UsersService } from '@/modules/users/users.service';
 import { comparePassword } from '@/helper/util';
-import { SignInDto } from './dto/signIn.dto';
 import { JwtService } from '@nestjs/jwt/dist/jwt.service';
 
 @Injectable()

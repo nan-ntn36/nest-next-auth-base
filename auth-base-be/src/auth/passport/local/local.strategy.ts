@@ -7,6 +7,8 @@ import { AuthService } from '../../auth.service';
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
     super();
+    // sử dụng usernameField và passwordField để map với req.body
+    //{ usernameField: 'email', passwordField: 'password' }
   }
 
   async validate(username: string, password: string): Promise<any> {
