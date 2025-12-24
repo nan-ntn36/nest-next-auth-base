@@ -19,14 +19,6 @@ import { JwtAuthGuard } from './auth/passport/jwt/jwt-auth.guard';
 @Module({
   imports: [
     UsersModule,
-    LikesModule,
-    MenuItemOptionsModule,
-    MenuItemsModule,
-    MenusModule,
-    OrderDetailModule,
-    OrdersModule,
-    RestaurantsModule,
-    ReviewsModule,
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],

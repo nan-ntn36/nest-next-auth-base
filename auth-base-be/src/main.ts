@@ -10,8 +10,8 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT', 8081);
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Auth example')
+    .setDescription('The auth API description')
     .setVersion('1.0')
     .addBearerAuth(
       { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
@@ -34,5 +34,7 @@ async function bootstrap() {
   app.setGlobalPrefix('v1', { exclude: ['/'] });
   app.useGlobalFilters(new HttpExceptionFilter());
   await app.listen(port);
+  console.log(`Application is running on: http://localhost:${port}`);
+  console.log(`Application is doc: http://localhost:${port}/api/docs`);
 }
 bootstrap();
